@@ -63,20 +63,32 @@ const Sidebar = () => {
       color="gray"
     >
       <Box paddingY="20px" height="100%">
-        <Box width="120px" marginBottom="20px" paddingX="20px">
-          <NextImage src="/logo.svg" height={60} width={120} />
+        <Box width="150px" marginBottom="20px" paddingX="10px">
+          <NextImage src="/logo.svg" height={120} width={240} />
         </Box>
         <Box marginBottom="20px">
           <List spacing={2}>
             {navMenu.map((menu) => (
-              <ListItem paddingX="20px" fontSize="16px" key={menu.name}>
+              <ListItem
+                fontWeight="bold"
+                paddingX="20px"
+                fontSize="16px"
+                key={menu.name}
+                sx={{
+                  transition: 'all .3s ',
+                  '&:hover': {
+                    color: 'rgba(255,255,255, 1)',
+                  },
+                }}
+                cursor="pointer"
+              >
                 <LinkBox>
                   <NextLink href={menu.route} passHref>
                     <LinkOverlay>
                       <ListIcon
                         as={menu.icon}
                         color="white"
-                        marginRight="20px"
+                        marginRight="10px"
                       />
                       {menu.name}
                     </LinkOverlay>
@@ -89,14 +101,26 @@ const Sidebar = () => {
         <Box marginTop="20px">
           <List spacing={2}>
             {musicMenu.map((menu) => (
-              <ListItem paddingX="20px" fontSize="16px" key={menu.name}>
+              <ListItem
+                fontWeight="bold"
+                paddingX="20px"
+                fontSize="16px"
+                key={menu.name}
+                sx={{
+                  transition: 'all .3s ',
+                  '&:hover': {
+                    color: 'rgba(255,255,255, 1)',
+                  },
+                }}
+                cursor="pointer"
+              >
                 <LinkBox>
                   <NextLink href={menu.route} passHref>
                     <LinkOverlay>
                       <ListIcon
                         as={menu.icon}
                         color="white"
-                        marginRight="20px"
+                        marginRight="10px"
                       />
                       {menu.name}
                     </LinkOverlay>
@@ -106,11 +130,24 @@ const Sidebar = () => {
             ))}
           </List>
         </Box>
-        <Divider color="gray.800" />
-        <Box height="66%" overflowY="auto" paddingY="20px">
+        <Center>
+          <Divider color="gray.800" paddingY="10px" width="85%" />
+        </Center>
+        <Box height="66%" overflowY="auto" paddingY="10px" fontSize="16px">
           <List spaceing={2}>
             {playlists.map((playlist) => (
-              <ListItem paddingX="20px" key={playlist.id}>
+              <ListItem
+                paddingX="20px"
+                paddingY="2.5px"
+                key={playlist.id}
+                sx={{
+                  transition: 'all .3s ',
+                  '&:hover': {
+                    color: 'rgba(255,255,255, 1)',
+                  },
+                }}
+                cursor="pointer"
+              >
                 <LinkBox>
                   <NextLink
                     href={{
