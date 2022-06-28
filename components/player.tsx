@@ -20,11 +20,14 @@ import {
   MdOutlinePauseCircleFilled,
   MdOutlineRepeat,
 } from 'react-icons/md'
-import { useStoreActions } from 'easy-peasy'
+import { useStoreActions, useStoreState } from 'easy-peasy'
 import { formatTime } from '../lib/formatters'
 
 const Player = ({ songs, activeSong }) => {
-  const [playing, setPlaying] = useState(true)
+  // const [playing, setPlaying] = useState(true)
+  const playing = useStoreState((state: any) => state.isPlaying)
+  const setPlaying = useStoreActions((store: any) => store.changePlayingState)
+
   const [index, setIndex] = useState(
     songs.findIndex((s) => s.id === activeSong.id)
   )
@@ -131,7 +134,13 @@ const Player = ({ songs, activeSong }) => {
             variant="link"
             aria-label="shuffle"
             fontSize="24px"
-            color={shuffle ? 'white' : 'gray.600'}
+            sx={{
+              transition: '.3s ',
+              '&:hover': {
+                color: shuffle ? 'rgb(136, 221, 143)' : 'rgba(255,255,255, 1)',
+              },
+            }}
+            color={shuffle ? 'rgb(96, 201, 104)' : 'gray.600'}
             onClick={onShuffle}
             icon={<MdShuffle />}
           />
@@ -140,6 +149,12 @@ const Player = ({ songs, activeSong }) => {
             variant="link"
             aria-label="skip"
             fontSize="24px"
+            sx={{
+              transition: '.3s ',
+              '&:hover': {
+                color: 'rgba(255,255,255, 1)',
+              },
+            }}
             icon={<MdSkipPrevious />}
             onClick={prevSong}
           />
@@ -152,6 +167,12 @@ const Player = ({ songs, activeSong }) => {
               color="white"
               icon={<MdOutlinePauseCircleFilled />}
               onClick={() => setPlayState(false)}
+              sx={{
+                transition: '.5s ',
+                '&:hover': {
+                  transform: 'scale(1.1)',
+                },
+              }}
             />
           ) : (
             <IconButton
@@ -162,6 +183,12 @@ const Player = ({ songs, activeSong }) => {
               color="white"
               icon={<MdOutlinePlayCircleFilled />}
               onClick={() => setPlayState(true)}
+              sx={{
+                transition: '.5s ',
+                '&:hover': {
+                  transform: 'scale(1.1)',
+                },
+              }}
             />
           )}
 
@@ -172,22 +199,34 @@ const Player = ({ songs, activeSong }) => {
             fontSize="24px"
             icon={<MdSkipNext />}
             onClick={nextSong}
+            sx={{
+              transition: '.3s ',
+              '&:hover': {
+                color: 'rgba(255,255,255, 1)',
+              },
+            }}
           />
           <IconButton
             outline="none"
             variant="link"
             aria-label="repeat"
             fontSize="24px"
-            color={repeat ? 'white' : 'gray.600'}
+            color={repeat ? 'rgb(96, 201, 104)' : 'gray.600'}
+            sx={{
+              transition: '.3s ',
+              '&:hover': {
+                color: repeat ? 'rgb(136, 221, 143)' : 'rgba(255,255,255, 1)',
+              },
+            }}
             onClick={onRepeat}
             icon={<MdOutlineRepeat />}
           />
         </ButtonGroup>
       </Center>
 
-      <Box color="gray.600">
+      <Box color="gray.500">
         <Flex justify="center" align="center">
-          <Box width="10%">
+          <Box width="10%" padding-right="4px">
             <Text fontSize="xs">{formatTime(seek)}</Text>
           </Box>
           <Box width="80%">
@@ -202,8 +241,8 @@ const Player = ({ songs, activeSong }) => {
               onChangeStart={() => setIsSeeking(true)}
               onChangeEnd={() => setIsSeeking(false)}
             >
-              <RangeSliderTrack bg="gray.800">
-                <RangeSliderFilledTrack bg="gray.600" />
+              <RangeSliderTrack bg="gray.700">
+                <RangeSliderFilledTrack bg="gray.200" />
               </RangeSliderTrack>
               <RangeSliderThumb index={0} />
             </RangeSlider>

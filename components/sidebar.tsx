@@ -1,5 +1,6 @@
-import NextImage from 'next/image'
+import { useStoreActions, useStoreState } from 'easy-peasy'
 import NextLink from 'next/link'
+
 import {
   Box,
   List,
@@ -54,25 +55,38 @@ const musicMenu = [
 
 const Sidebar = () => {
   const { playlists } = usePlaylist()
+  const activePlaylist = useStoreState((state: any) => state.activePlaylist)
+  const setActivePlaylist = useStoreActions(
+    (store: any) => store.changeActivePlaylist
+  )
+
+  const handler = (id) => {
+    if (activePlaylist === null) {
+      setActivePlaylist(0)
+    } else {
+      setActivePlaylist(+id)
+    }
+  }
+
   return (
     <Box
       width="100%"
       height="calc(100vh - 100px)"
       bg="black"
       paddingX="5px"
-      color="gray"
+      color="gray.500"
     >
-      <Box paddingY="20px" height="100%">
-        <Box width="150px" marginBottom="20px" paddingX="10px">
+      <Box paddingY="30px" height="100%">
+        {/* <Box width="100px" marginBottom="10px" paddingX="10px">
           <NextImage src="/logo.svg" height={120} width={240} />
-        </Box>
+        </Box> */}
         <Box marginBottom="20px">
-          <List spacing={2}>
+          <List spacing={5}>
             {navMenu.map((menu) => (
               <ListItem
                 fontWeight="bold"
                 paddingX="20px"
-                fontSize="16px"
+                fontSize="14px"
                 key={menu.name}
                 sx={{
                   transition: 'all .3s ',
@@ -98,13 +112,13 @@ const Sidebar = () => {
             ))}
           </List>
         </Box>
-        <Box marginTop="20px">
-          <List spacing={2}>
+        <Box marginTop="40px">
+          <List spacing={5}>
             {musicMenu.map((menu) => (
               <ListItem
                 fontWeight="bold"
                 paddingX="20px"
-                fontSize="16px"
+                fontSize="14px"
                 key={menu.name}
                 sx={{
                   transition: 'all .3s ',
@@ -133,17 +147,23 @@ const Sidebar = () => {
         <Center>
           <Divider color="gray.800" paddingY="10px" width="85%" />
         </Center>
-        <Box height="66%" overflowY="auto" paddingY="10px" fontSize="16px">
-          <List spaceing={2}>
+        <Box height="66%" overflowY="auto" paddingY="10px" fontSize="14px">
+          <List>
             {playlists.map((playlist) => (
               <ListItem
                 paddingX="20px"
-                paddingY="2.5px"
+                paddingY="5px"
                 key={playlist.id}
+                color={
+                  activePlaylist === playlist.id
+                    ? 'rgba(255,255,255, 1)'
+                    : 'gray.500'
+                }
                 sx={{
                   transition: 'all .3s ',
                   '&:hover': {
                     color: 'rgba(255,255,255, 1)',
+                    // transform: 'scale(1.1)',
                   },
                 }}
                 cursor="pointer"
@@ -156,7 +176,9 @@ const Sidebar = () => {
                     }}
                     passHref
                   >
-                    <LinkOverlay>{playlist.name}</LinkOverlay>
+                    <LinkOverlay onClick={() => handler(playlist.id)}>
+                      {playlist.name}
+                    </LinkOverlay>
                   </NextLink>
                 </LinkBox>
               </ListItem>

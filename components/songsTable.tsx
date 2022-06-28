@@ -1,31 +1,79 @@
 import { Box } from '@chakra-ui/layout'
 import { Table, Thead, Td, Tr, Tbody, Th, IconButton } from '@chakra-ui/react'
-import { BsFillPlayFill } from 'react-icons/bs'
+import {
+  MdOutlinePlayCircleFilled,
+  MdOutlinePauseCircleFilled,
+} from 'react-icons/md'
 import { AiOutlineClockCircle } from 'react-icons/ai'
-import { useStoreActions } from 'easy-peasy'
+import { useStoreActions, useStoreState } from 'easy-peasy'
 import { formatDate, formatTime } from '../lib/formatters'
 
 const SongTable = ({ songs }) => {
   const playSongs = useStoreActions((store: any) => store.changeActiveSongs)
   const setActiveSong = useStoreActions((store: any) => store.changeActiveSong)
+  const activeSong = useStoreState((state: any) => state.activeSong)
 
-  const handlePlay = (activeSong?) => {
-    setActiveSong(activeSong || songs[0])
+  const playing = useStoreState((state: any) => state.isPlaying)
+  const setPlaying = useStoreActions((store: any) => store.changePlayingState)
+
+  const setPlayState = (value) => {
+    if (!value) {
+      // click pause
+      setPlaying(false)
+    } else {
+      // click play
+      setPlaying(true)
+      if (!activeSong) {
+        setActiveSong(songs[0])
+      }
+      playSongs(songs)
+    }
+  }
+
+  const handlePlay = (song) => {
+    setActiveSong(song)
     playSongs(songs)
   }
 
   return (
     <Box bg="transparent" color="white">
       <Box padding="10px" marginBottom="20px">
-        <Box marginBottom="30px">
-          <IconButton
-            icon={<BsFillPlayFill fontSize="30px" />}
-            aria-label="play"
-            colorScheme="green"
-            size="lg"
-            isRound
-            onClick={() => handlePlay()}
-          />
+        <Box padding="0 0 30px 30px">
+          {playing ? (
+            <IconButton
+              outline="none"
+              variant="link"
+              aria-label="play"
+              fontSize="60px"
+              color="rgb(105, 221, 114)"
+              icon={<MdOutlinePauseCircleFilled />}
+              onClick={() => setPlayState(false)}
+              sx={{
+                transition: '.5s ',
+                '&:hover': {
+                  transform: 'scale(1.1)',
+                  color: 'rgb(105, 220, 114)',
+                },
+              }}
+            />
+          ) : (
+            <IconButton
+              outline="none"
+              variant="link"
+              aria-label="play"
+              fontSize="60px"
+              color="rgb(105, 221, 114)"
+              icon={<MdOutlinePlayCircleFilled />}
+              onClick={() => setPlayState(true)}
+              sx={{
+                transition: '.5s ',
+                '&:hover': {
+                  transform: 'scale(1.1)',
+                  color: 'rgb(105, 220, 114)',
+                },
+              }}
+            />
+          )}
         </Box>
         <Table variant="unstyled">
           <Thead borderBottom="1px solid" borderColor="rgba(255,255,255,0.2)">
