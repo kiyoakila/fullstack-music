@@ -28,7 +28,7 @@ const ArtistPlaylist = ({ songs }) => {
       title={songs[0].artist.name}
       subtitle=""
       description="10000 month listeners"
-      image="https://placekitten.com/300/300`"
+      image="https://placekitten.com/300/300"
     >
       <SongTable songs={songs} />
     </GradientLayout>
