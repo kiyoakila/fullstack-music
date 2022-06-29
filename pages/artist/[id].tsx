@@ -1,4 +1,4 @@
-import GradientLayoutArtist from '../../components/gradientLayoutArtist'
+import GradientLayout from '../../components/gradientLayout'
 import SongTable from '../../components/songsTable'
 import { validateToken } from '../../lib/auth'
 import prisma from '../../lib/prisma'
@@ -22,16 +22,16 @@ const ArtistPlaylist = ({ songs }) => {
   const color = getBGColor(songs.artistId)
 
   return (
-    <GradientLayoutArtist
+    <GradientLayout
       color={color}
       roundImage
       title={songs[0].artist.name}
       subtitle=""
-      description={`10000 month listeners`}
-      image={`https://placekitten.com/300/300`}
+      description="10000 month listeners"
+      image="https://placekitten.com/300/300`"
     >
       <SongTable songs={songs} />
-    </GradientLayoutArtist>
+    </GradientLayout>
   )
 }
 
