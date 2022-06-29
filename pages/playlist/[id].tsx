@@ -35,7 +35,7 @@ const Playlist = ({ playlist }) => {
   )
 }
 
-export const getServerSideProps = async ({ query, req }) => {
+export const getServerSideProps = async ({ params, req }) => {
   let user
 
   try {
@@ -51,7 +51,7 @@ export const getServerSideProps = async ({ query, req }) => {
 
   const [playlist] = await prisma.playlist.findMany({
     where: {
-      id: +query.id,
+      id: +params.id,
       userId: user.id,
     },
     include: {
@@ -67,7 +67,6 @@ export const getServerSideProps = async ({ query, req }) => {
       },
     },
   })
-
   return {
     props: { playlist },
   }

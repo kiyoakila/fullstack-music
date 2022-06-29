@@ -43,7 +43,7 @@ const SongTable = ({ songs }) => {
             <IconButton
               outline="none"
               variant="link"
-              aria-label="play"
+              aria-label="pause"
               fontSize="60px"
               color="rgb(105, 221, 114)"
               icon={<MdOutlinePauseCircleFilled />}
