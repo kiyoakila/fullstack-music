@@ -37,6 +37,14 @@ export const getServerSideProps = async ({ req }) => {
     where: {
       likedUsers: { some: { id: user.id } },
     },
+    include: {
+      artist: {
+        select: {
+          name: true,
+          id: true,
+        },
+      },
+    },
   })
   const userData = await prisma.user.findUnique({
     where: {

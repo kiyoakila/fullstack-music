@@ -21,6 +21,7 @@ const GradientLayout = ({
       overflowY="auto"
       bgGradient={`linear(${color}.500 0%, ${color}.600 15%, ${color}.700 40%, rgba(0,0,0,0.95) 75%)`}
     >
+      {/* Buttons: prev and next */}
       <Flex bg={`${color}.600`} paddingY="20px">
         <ButtonGroup marginup="20px">
           <IconButton
@@ -40,16 +41,19 @@ const GradientLayout = ({
           />
         </ButtonGroup>
       </Flex>
+      {/* Banner */}
       <Flex bg={`${color}.600`} padding="40px" align="end">
+        {/* Profile */}
         <Box padding="20px">
           <Image
             boxSize="230px"
-            boxShadow="3xl"
+            boxShadow="2xl"
             src={image}
             borderRadius={roundImage ? '100%' : '3px'}
             objectFit="cover"
           />
         </Box>
+        {/* Texts */}
         <Box padding="20px 0 10px 10px" lineHeight="40px" color="white">
           <Text fontSize="x-small" fontWeight="bold" casing="uppercase">
             {subtitle}

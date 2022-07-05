@@ -3,6 +3,8 @@ import { Table, Thead, Td, Tr, Tbody, Th, IconButton } from '@chakra-ui/react'
 import {
   MdOutlinePlayCircleFilled,
   MdOutlinePauseCircleFilled,
+  MdOutlineFavoriteBorder,
+  MdOutlineFavorite,
 } from 'react-icons/md'
 import { AiOutlineClockCircle } from 'react-icons/ai'
 import { useStoreActions, useStoreState } from 'easy-peasy'
@@ -38,6 +40,7 @@ const SongTable = ({ songs }) => {
   return (
     <Box bg="transparent" color="white">
       <Box padding="10px" marginBottom="20px">
+        {/* play/pause button */}
         <Box padding="0 0 30px 30px">
           {playing ? (
             <IconButton
@@ -81,6 +84,7 @@ const SongTable = ({ songs }) => {
               <Th>#</Th>
               <Th>Title</Th>
               <Th>Date Added</Th>
+              <Th> </Th>
               <Th>
                 <AiOutlineClockCircle />
               </Th>
@@ -102,6 +106,10 @@ const SongTable = ({ songs }) => {
                 <Td>{i + 1}</Td>
                 <Td>{song.name}</Td>
                 <Td>{formatDate(song.createdAt)}</Td>
+                <Td>
+                  {' '}
+                  <MdOutlineFavoriteBorder />{' '}
+                </Td>
                 <Td>{formatTime(song.duration)}</Td>
               </Tr>
             ))}

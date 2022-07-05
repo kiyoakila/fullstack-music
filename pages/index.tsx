@@ -15,7 +15,7 @@ const Home = ({ artists }) => {
       subtitle="profile"
       title={`${user?.firstName} ${user?.lastName}`}
       description={`${user?.playlistsCount} public playlists`}
-      image="https://cdn.pixabay.com/photo/2020/09/27/18/08/cat-5607424__480.jpg"
+      image={`${user?.profile}`}
     >
       <Box color="white" paddingX="40px">
         <Box marginBottom="40px">
@@ -24,14 +24,12 @@ const Home = ({ artists }) => {
           </Text>
           <Text fontSize="md">only visible to you</Text>
         </Box>
+        {/* Artist cards */}
         <Flex>
           {artists.map((artist) => (
             <LinkBox paddingX="10px" width="20%">
               <Box bg="gray.900" borderRadius="4px" padding="15px" width="100%">
-                <Image
-                  src="https://placekitten.com/300/300"
-                  borderRadius="100%"
-                />
+                <Image src={`${artist.profile}`} borderRadius="100%" />
                 <Box marginTop="20px">
                   <NextLink
                     href={{
