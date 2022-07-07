@@ -3,7 +3,7 @@ import SongTable from '../components/songsTable'
 import { validateToken } from '../lib/auth'
 import prisma from '../lib/prisma'
 
-const Favorites = ({ favorites, userData }) => {
+const Favorites = ({ favorites, user }) => {
   const color = 'purple'
 
   return (
@@ -12,7 +12,7 @@ const Favorites = ({ favorites, userData }) => {
       roundImage={false}
       title="Liked Songs"
       subtitle="PLAYLIST"
-      description={`${userData?.firstName}  ·  ${favorites.length} songs`}
+      description={`${user?.firstName}  ·  ${favorites.length} songs`}
       image="https://placekitten.com/300/300"
     >
       <SongTable songs={favorites} />
@@ -46,14 +46,9 @@ export const getServerSideProps = async ({ req }) => {
       },
     },
   })
-  const userData = await prisma.user.findUnique({
-    where: {
-      id: user.id,
-    },
-  })
-  // console.log(favorites)
+
   return {
-    props: { favorites, userData },
+    props: { favorites, user },
   }
 }
 export default Favorites

@@ -1,5 +1,15 @@
 import { Box } from '@chakra-ui/layout'
-import { Table, Thead, Td, Tr, Tbody, Th, IconButton } from '@chakra-ui/react'
+import {
+  Table,
+  Thead,
+  Td,
+  Tr,
+  Tbody,
+  Th,
+  IconButton,
+  color,
+} from '@chakra-ui/react'
+import { useState } from 'react'
 import {
   MdOutlinePlayCircleFilled,
   MdOutlinePauseCircleFilled,
@@ -9,8 +19,11 @@ import {
 import { AiOutlineClockCircle } from 'react-icons/ai'
 import { useStoreActions, useStoreState } from 'easy-peasy'
 import { formatDate, formatTime } from '../lib/formatters'
+import { useFavorites } from '../lib/hooks'
 
 const SongTable = ({ songs }) => {
+  const { favorites } = useFavorites()
+  console.log(favorites)
   const playSongs = useStoreActions((store: any) => store.changeActiveSongs)
   const setActiveSong = useStoreActions((store: any) => store.changeActiveSong)
   const activeSong = useStoreState((state: any) => state.activeSong)
@@ -36,6 +49,10 @@ const SongTable = ({ songs }) => {
     setActiveSong(song)
     playSongs(songs)
   }
+
+  // const handleToggleFavorite = (song) {
+
+  // }
 
   return (
     <Box bg="transparent" color="white">
@@ -107,8 +124,33 @@ const SongTable = ({ songs }) => {
                 <Td>{song.name}</Td>
                 <Td>{formatDate(song.createdAt)}</Td>
                 <Td>
-                  {' '}
-                  <MdOutlineFavoriteBorder />{' '}
+                  {!favorites.includes(song.id) ? (
+                    <IconButton
+                      // outline="none"
+                      variant="link"
+                      color="transparent"
+                      aria-label="like"
+                      // fontSize="24px"
+                      icon={<MdOutlineFavoriteBorder />}
+                      sx={{
+                        transition: 'all .3s ',
+                        '&:hover': { color: 'white' },
+                      }}
+                      onClick={() => {}}
+                    />
+                  ) : (
+                    <IconButton
+                      variant="link"
+                      color="rgb(101, 212, 110)"
+                      aria-label="like"
+                      icon={<MdOutlineFavorite />}
+                      sx={{
+                        transition: 'all .3s ',
+                        '&:hover': { color: 'rgb(105, 221, 114)' },
+                      }}
+                      onClick={() => {}}
+                    />
+                  )}
                 </Td>
                 <Td>{formatTime(song.duration)}</Td>
               </Tr>
