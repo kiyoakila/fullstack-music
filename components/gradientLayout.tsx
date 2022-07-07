@@ -1,6 +1,6 @@
 import { Box, Flex, Text } from '@chakra-ui/layout'
 import { Image, ButtonGroup, IconButton } from '@chakra-ui/react'
-import { GrFormNext, GrFormPrevious } from 'react-icons/gr'
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md'
 
 import { useRouter } from 'next/router'
 
@@ -22,22 +22,25 @@ const GradientLayout = ({
       bgGradient={`linear(${color}.500 0%, ${color}.600 15%, ${color}.700 40%, rgba(18,18,18,1) 75%)`}
     >
       {/* Buttons: prev and next */}
-      <Flex bg={`${color}.600`} paddingY="20px">
-        <ButtonGroup marginup="20px">
+      <Flex bg={`${color}.600`} paddingY="20px" paddingX="20px">
+        <ButtonGroup marginup="20px" paddingX="10px">
           <IconButton
+            // bg="gray.500"
+            color="gray.900"
             outline="none"
             variant="link"
             aria-label="go-back"
             fontSize="24px"
-            icon={<GrFormPrevious />}
+            icon={<MdKeyboardArrowLeft />}
             onClick={() => router.back()}
           />
           <IconButton
+            color="gray.900"
             outline="none"
             variant="link"
             aria-label="forward"
             fontSize="24px"
-            icon={<GrFormNext />}
+            icon={<MdKeyboardArrowRight />}
           />
         </ButtonGroup>
       </Flex>

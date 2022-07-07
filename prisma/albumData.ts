@@ -88,7 +88,7 @@ export const artistsData: {
     album: {
       albumName: 'Shangri-La',
       albumCover:
-        'https://freemusicarchive.org/image/?file=images%2Falbums%2Fspringtide_-_Just_Before_April_-_2013011574252365.jpg&width=290&height=290&type=image',
+        'https://freemusicarchive.org/image/?file=images%2Falbums%2FYACHT_-_Shangri-La_Instrumentals_-_2011101352600471.jpg&width=290&height=290&type=image',
     },
     songs: [
       {
