@@ -19,7 +19,7 @@ const GradientLayout = ({
     <Box
       height="100%"
       overflowY="auto"
-      bgGradient={`linear(${color}.500 0%, ${color}.600 15%, ${color}.700 40%, rgba(0,0,0,0.95) 75%)`}
+      bgGradient={`linear(${color}.500 0%, ${color}.600 15%, ${color}.700 40%, rgba(18,18,18,1) 75%)`}
     >
       {/* Buttons: prev and next */}
       <Flex bg={`${color}.600`} paddingY="20px">

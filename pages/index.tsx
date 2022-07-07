@@ -1,7 +1,6 @@
-import { Box, Text, Flex, LinkBox, LinkOverlay } from '@chakra-ui/layout'
-import { Image } from '@chakra-ui/react'
-import NextLink from 'next/link'
+import { Box, Text, Flex } from '@chakra-ui/layout'
 import GradientLayout from '../components/gradientLayout'
+import Card from '../components/card'
 import { useMe } from '../lib/hooks'
 import prisma from '../lib/prisma'
 
@@ -27,25 +26,14 @@ const Home = ({ artists }) => {
         {/* Artist cards */}
         <Flex>
           {artists.map((artist) => (
-            <LinkBox paddingX="10px" width="20%">
-              <Box bg="gray.900" borderRadius="4px" padding="15px" width="100%">
-                <Image src={`${artist.profile}`} borderRadius="100%" />
-                <Box marginTop="20px">
-                  <NextLink
-                    href={{
-                      pathname: '/artist/[id]',
-                      query: { id: artist.id },
-                    }}
-                    passHref
-                  >
-                    <LinkOverlay>
-                      <Text fontSize="large">{artist.name}</Text>
-                    </LinkOverlay>
-                  </NextLink>
-                  <Text fontSize="x-small">Artist</Text>
-                </Box>
-              </Box>
-            </LinkBox>
+            <Card
+              image={`${artist.profile}`}
+              title={artist.name}
+              subtitle="Artist"
+              roundImage
+              pathname="/artist/[id]"
+              id={artist.id}
+            />
           ))}
         </Flex>
       </Box>

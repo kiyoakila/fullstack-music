@@ -1,15 +1,5 @@
 import { Box } from '@chakra-ui/layout'
-import {
-  Table,
-  Thead,
-  Td,
-  Tr,
-  Tbody,
-  Th,
-  IconButton,
-  color,
-} from '@chakra-ui/react'
-import { useState } from 'react'
+import { Table, Thead, Td, Tr, Tbody, Th, IconButton } from '@chakra-ui/react'
 import {
   MdOutlinePlayCircleFilled,
   MdOutlinePauseCircleFilled,
@@ -23,7 +13,6 @@ import { useFavorites } from '../lib/hooks'
 
 const SongTable = ({ songs }) => {
   const { favorites } = useFavorites()
-  console.log(favorites)
   const playSongs = useStoreActions((store: any) => store.changeActiveSongs)
   const setActiveSong = useStoreActions((store: any) => store.changeActiveSong)
   const activeSong = useStoreState((state: any) => state.activeSong)
