@@ -5,7 +5,7 @@ import { artistsData } from './albumData'
 const prisma = new PrismaClient()
 
 const run = async () => {
-  prisma.song.deleteMany()
+  prisma.playlist.deleteMany()
 
   await Promise.all(
     artistsData.map(async (artist) => {
