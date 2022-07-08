@@ -6,7 +6,7 @@ import NextLink from 'next/link'
 import { LinkBox, LinkOverlay } from '@chakra-ui/layout'
 import { auth } from '../lib/mutations'
 
-const AuthForm: FC<{ mode: 'Sign in' | 'Sign up' }> = ({ mode }) => {
+const AuthForm: FC<{ mode: 'signin' | 'signup' }> = ({ mode }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -72,7 +72,7 @@ const AuthForm: FC<{ mode: 'Sign in' | 'Sign up' }> = ({ mode }) => {
               </Button>
             </Flex>
           </form>
-          {mode === 'Sign in' ? (
+          {mode === 'signin' ? (
             <Box borderTop="#E8E8E8 2px solid">
               <Box marginY="20px" textAlign="center">
                 <Text fontWeight="bold">No account?</Text>
@@ -93,7 +93,7 @@ const AuthForm: FC<{ mode: 'Sign in' | 'Sign up' }> = ({ mode }) => {
                       },
                     }}
                   >
-                    <LinkOverlay>Sign up</LinkOverlay>
+                    <LinkOverlay>sign up</LinkOverlay>
                   </Button>
                 </NextLink>
               </LinkBox>
@@ -119,7 +119,7 @@ const AuthForm: FC<{ mode: 'Sign in' | 'Sign up' }> = ({ mode }) => {
                       },
                     }}
                   >
-                    <LinkOverlay>Sign in</LinkOverlay>
+                    <LinkOverlay>sign in</LinkOverlay>
                   </Button>
                 </NextLink>
               </LinkBox>
