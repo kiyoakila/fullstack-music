@@ -1,7 +1,7 @@
 import fetcher from './fetcher'
 
 export const auth = (
-  mode: 'signin' | 'signup',
+  mode: 'Sign in' | 'Sign up',
   body: { email: string; password: string }
 ) => {
   return fetcher(`/${mode}`, body)

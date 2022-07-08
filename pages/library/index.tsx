@@ -30,7 +30,7 @@ const Library = ({ playlists }) => {
   )
 }
 
-export const getServerSideProps = async ({ req, res }) => {
+export const getServerSideProps = async ({ req }) => {
   let user
 
   try {
