@@ -23,6 +23,7 @@ const Library = ({ playlists }) => {
             roundImage={false}
             pathname="/playlist/[id]"
             id={playlist.id}
+            key={playlist.id}
           />
         ))}
       </Flex>

@@ -7,12 +7,21 @@ import {
   MdOutlineFavorite,
 } from 'react-icons/md'
 import { AiOutlineClockCircle } from 'react-icons/ai'
+import { useState, useEffect } from 'react'
 import { useStoreActions, useStoreState } from 'easy-peasy'
 import { formatDate, formatTime } from '../lib/formatters'
-import { useFavorites } from '../lib/hooks'
+import { useFavorites, useMe } from '../lib/hooks'
+import { delFavorite, addFavorite } from '../lib/mutations'
 
 const SongTable = ({ songs }) => {
   const { favorites } = useFavorites()
+  const { user } = useMe()
+
+  const [likes, setLikes] = useState([])
+  useEffect(() => {
+    setLikes(() => [...favorites])
+  }, [])
+
   const playSongs = useStoreActions((store: any) => store.changeActiveSongs)
   const setActiveSong = useStoreActions((store: any) => store.changeActiveSong)
   const activeSong = useStoreState((state: any) => state.activeSong)
@@ -39,9 +48,20 @@ const SongTable = ({ songs }) => {
     playSongs(songs)
   }
 
-  // const handleToggleFavorite = (song) {
+  const handleAddFavorite = async (songId) => {
+    const userId = user.id
+    setLikes(() => [...likes, songId])
+    await addFavorite({ userId, songId })
+  }
 
-  // }
+  const handleDelFavorite = async (songId) => {
+    const userId = user.id
+    setLikes(() => {
+      const result = likes.filter((id) => id !== songId)
+      return result
+    })
+    await delFavorite({ userId, songId })
+  }
 
   return (
     <Box bg="transparent" color="white">
@@ -84,12 +104,14 @@ const SongTable = ({ songs }) => {
             />
           )}
         </Box>
+        {/* song table */}
         <Table variant="unstyled">
           <Thead borderBottom="1px solid" borderColor="rgba(255,255,255,0.2)">
             <Tr>
               <Th>#</Th>
               <Th>Title</Th>
               <Th>Date Added</Th>
+              {/* like */}
               <Th> </Th>
               <Th>
                 <AiOutlineClockCircle />
@@ -113,7 +135,7 @@ const SongTable = ({ songs }) => {
                 <Td>{song.name}</Td>
                 <Td>{formatDate(song.createdAt)}</Td>
                 <Td>
-                  {!favorites.includes(song.id) ? (
+                  {!likes.includes(song.id) ? (
                     <IconButton
                       // outline="none"
                       variant="link"
@@ -125,7 +147,9 @@ const SongTable = ({ songs }) => {
                         transition: 'all .3s ',
                         '&:hover': { color: 'white' },
                       }}
-                      onClick={() => {}}
+                      onClick={() => {
+                        handleAddFavorite(song.id)
+                      }}
                     />
                   ) : (
                     <IconButton
@@ -137,7 +161,9 @@ const SongTable = ({ songs }) => {
                         transition: 'all .3s ',
                         '&:hover': { color: 'rgb(105, 221, 114)' },
                       }}
-                      onClick={() => {}}
+                      onClick={() => {
+                        handleDelFavorite(song.id)
+                      }}
                     />
                   )}
                 </Td>

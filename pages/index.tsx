@@ -33,6 +33,7 @@ const Home = ({ artists }) => {
               roundImage
               pathname="/artist/[id]"
               id={artist.id}
+              key={artist.id}
             />
           ))}
         </Flex>

@@ -23,6 +23,7 @@ import MenuItem from './menuItem'
 import { createplaylist } from '../lib/mutations'
 import { usePlaylist, useMe } from '../lib/hooks'
 
+// menu data
 const navMenu = [
   {
     name: 'Home',
@@ -40,7 +41,6 @@ const navMenu = [
     route: '/library',
   },
 ]
-
 const musicMenu = [
   {
     name: 'Create Playlist',
@@ -59,9 +59,9 @@ const Sidebar = () => {
   const { user } = useMe()
   const [lists, setLists] = useState([])
   useEffect(() => {
-    setLists(playlists)
-  }, [playlists])
-
+    setLists([...playlists])
+  }, [])
+  // console.log(lists)
   const router = useRouter()
 
   const activePlaylist = useStoreState((state: any) => state.activePlaylist)
@@ -97,7 +97,7 @@ const Sidebar = () => {
         <Box marginBottom="20px">
           <List spacing={5}>
             {navMenu.map((menu) => (
-              <MenuItem menu={menu} />
+              <MenuItem menu={menu} key={menu.name} />
             ))}
           </List>
         </Box>
@@ -137,7 +137,7 @@ const Sidebar = () => {
         </Center>
         <Box height="66%" overflowY="auto" paddingY="10px" fontSize="14px">
           <List>
-            {lists.map((playlist) => (
+            {playlists.map((playlist) => (
               <ListItem
                 paddingX="20px"
                 paddingY="5px"

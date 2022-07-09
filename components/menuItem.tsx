@@ -8,7 +8,7 @@ const MenuItem = ({ menu }) => {
       fontWeight="bold"
       paddingX="20px"
       fontSize="14px"
-      key={menu.name}
+      // key=""
       sx={{
         transition: 'all .3s ',
         '&:hover': {
