@@ -1,6 +1,6 @@
 import { useStoreActions, useStoreState } from 'easy-peasy'
 import NextLink from 'next/link'
-
+import { useRouter } from 'next/router'
 import {
   Box,
   List,
@@ -18,7 +18,10 @@ import {
   MdPlaylistAdd,
   MdFavorite,
 } from 'react-icons/md'
-import { usePlaylist } from '../lib/hooks'
+import { useState, useEffect } from 'react'
+import MenuItem from './menuItem'
+import { createplaylist } from '../lib/mutations'
+import { usePlaylist, useMe } from '../lib/hooks'
 
 const navMenu = [
   {
@@ -38,10 +41,6 @@ const navMenu = [
   },
 ]
 
-// const handleCreateList=()=>{
-
-// }
-
 const musicMenu = [
   {
     name: 'Create Playlist',
@@ -55,21 +54,37 @@ const musicMenu = [
   },
 ]
 
-// const playlists = new Array(30).fill(1).map((_, i) => `Playlist ${i + 1}`)
-
 const Sidebar = () => {
   const { playlists } = usePlaylist()
+  const { user } = useMe()
+  const [lists, setLists] = useState([])
+  useEffect(() => {
+    setLists(playlists)
+  }, [playlists])
+
+  const router = useRouter()
+
   const activePlaylist = useStoreState((state: any) => state.activePlaylist)
   const setActivePlaylist = useStoreActions(
     (store: any) => store.changeActivePlaylist
   )
 
-  const handler = (id) => {
+  const handleSetActivePlaylist = (id) => {
     if (activePlaylist === null) {
       setActivePlaylist(0)
     } else {
       setActivePlaylist(+id)
     }
+  }
+
+  const handleCreatePlaylist = async () => {
+    const newPlaylist = await createplaylist({ user })
+    const route = `/playlist/${newPlaylist.id}`
+    // router.reload()
+    const newPlaylists = [...lists, newPlaylist]
+    setLists(newPlaylists)
+    console.log(lists)
+    router.push(route)
   }
 
   return (
@@ -81,71 +96,42 @@ const Sidebar = () => {
       color="gray.500"
     >
       <Box paddingY="30px" height="100%">
-        {/* <Box width="100px" marginBottom="10px" paddingX="10px">
-          <NextImage src="/logo.svg" height={120} width={240} />
-        </Box> */}
         <Box marginBottom="20px">
           <List spacing={5}>
             {navMenu.map((menu) => (
-              <ListItem
-                fontWeight="bold"
-                paddingX="20px"
-                fontSize="14px"
-                key={menu.name}
-                sx={{
-                  transition: 'all .3s ',
-                  '&:hover': {
-                    color: 'rgba(255,255,255, 1)',
-                  },
-                }}
-                cursor="pointer"
-              >
-                <LinkBox>
-                  <NextLink href={menu.route} passHref>
-                    <LinkOverlay>
-                      <ListIcon
-                        as={menu.icon}
-                        color="white"
-                        marginRight="10px"
-                      />
-                      {menu.name}
-                    </LinkOverlay>
-                  </NextLink>
-                </LinkBox>
-              </ListItem>
+              <MenuItem menu={menu} />
             ))}
           </List>
         </Box>
         <Box marginTop="40px">
           <List spacing={5}>
-            {musicMenu.map((menu) => (
-              <ListItem
-                fontWeight="bold"
-                paddingX="20px"
-                fontSize="14px"
-                key={menu.name}
-                sx={{
-                  transition: 'all .3s ',
-                  '&:hover': {
-                    color: 'rgba(255,255,255, 1)',
-                  },
-                }}
-                cursor="pointer"
-              >
-                <LinkBox>
-                  <NextLink href={menu.route} passHref>
-                    <LinkOverlay>
-                      <ListIcon
-                        as={menu.icon}
-                        color="white"
-                        marginRight="10px"
-                      />
-                      {menu.name}
-                    </LinkOverlay>
-                  </NextLink>
-                </LinkBox>
-              </ListItem>
-            ))}
+            {/* create playlist */}
+            <ListItem
+              fontWeight="bold"
+              paddingX="20px"
+              fontSize="14px"
+              key={musicMenu[0].name}
+              sx={{
+                transition: 'all .3s ',
+                '&:hover': {
+                  color: 'rgba(255,255,255, 1)',
+                },
+              }}
+              cursor="pointer"
+            >
+              <LinkBox onClick={() => handleCreatePlaylist()}>
+                <LinkOverlay>
+                  <ListIcon
+                    as={musicMenu[0].icon}
+                    color="white"
+                    marginRight="10px"
+                  />
+                  {musicMenu[0].name}
+                </LinkOverlay>
+              </LinkBox>
+            </ListItem>
+            {/* favorites */}
+            <MenuItem menu={musicMenu[1]} />
           </List>
         </Box>
         <Center>
@@ -153,7 +139,7 @@ const Sidebar = () => {
         </Center>
         <Box height="66%" overflowY="auto" paddingY="10px" fontSize="14px">
           <List>
-            {playlists.map((playlist) => (
+            {lists.map((playlist) => (
               <ListItem
                 paddingX="20px"
                 paddingY="5px"
@@ -180,7 +166,9 @@ const Sidebar = () => {
                     }}
                     passHref
                   >
-                    <LinkOverlay onClick={() => handler(playlist.id)}>
+                    <LinkOverlay
+                      onClick={() => handleSetActivePlaylist(playlist.id)}
+                    >
                       {playlist.name}
                     </LinkOverlay>
                   </NextLink>

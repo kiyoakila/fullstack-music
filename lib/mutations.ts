@@ -6,3 +6,7 @@ export const auth = (
 ) => {
   return fetcher(`/${mode}`, body)
 }
+
+export const createplaylist = (body: { user }) => {
+  return fetcher('/createplaylist', body)
+}

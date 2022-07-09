@@ -6,6 +6,10 @@ export default validateRoute(async (req, res, user) => {
     where: {
       userId: user.id,
     },
+    select: {
+      id: true,
+      name: true,
+    },
     orderBy: {
       id: 'asc',
     },
