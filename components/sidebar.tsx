@@ -80,10 +80,8 @@ const Sidebar = () => {
   const handleCreatePlaylist = async () => {
     const newPlaylist = await createplaylist({ user })
     const route = `/playlist/${newPlaylist.id}`
-    // router.reload()
     const newPlaylists = [...lists, newPlaylist]
     setLists(newPlaylists)
-    console.log(lists)
     router.push(route)
   }
 
