@@ -7,8 +7,15 @@ import NextLink from 'next/link'
 const LibraryLayout = ({ active, children }) => {
   const router = useRouter()
   return (
-    <Box bg="rgb(18,18,18)" height="100%" overflowY="auto">
-      <Flex paddingY="20px" paddingX="20px">
+    <Box
+      position="absolute"
+      bg="rgb(18,18,18)"
+      height="100%"
+      // overflowX="hidden"
+      // overflowX="scroll"
+      width="calc(100vw - 235px)"
+    >
+      <Box paddingY="20px" paddingX="20px" width="100%">
         <ButtonGroup marginup="20px" paddingX="10px">
           <IconButton
             // bg="gray.500"
@@ -87,7 +94,7 @@ const LibraryLayout = ({ active, children }) => {
             </NextLink>
           </LinkBox>
         </ButtonGroup>
-      </Flex>
+      </Box>
 
       <Box color="white" paddingX="40px">
         {children}

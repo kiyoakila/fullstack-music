@@ -11,7 +11,7 @@ const ArtistLibrary = ({ artists }) => {
           Artist
         </Text>
       </Box>
-      <Flex>
+      <Flex flexWrap="wrap">
         {artists.map((artist) => (
           <Card
             image={`${artist.profile}`}

@@ -24,7 +24,7 @@ const Home = ({ artists }) => {
           <Text fontSize="md">only visible to you</Text>
         </Box>
         {/* Artist cards */}
-        <Flex>
+        <Flex flexWrap="wrap">
           {artists.map((artist) => (
             <Card
               image={`${artist.profile}`}

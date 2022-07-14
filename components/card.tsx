@@ -25,7 +25,7 @@ const Card = ({ image, title, subtitle, roundImage, pathname, id }) => {
 
   return (
     <Flex flex="0 0 20%">
-      <LinkBox marginRight="20px">
+      <LinkBox marginRight="20px" marginBottom="10px">
         <Box
           bg="rgb(24, 24, 24)"
           borderRadius="6px"

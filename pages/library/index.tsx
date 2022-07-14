@@ -14,7 +14,7 @@ const Library = ({ playlists }) => {
           Playlists
         </Text>
       </Box>
-      <Flex>
+      <Flex flexWrap="wrap">
         {playlists.map((playlist) => (
           <Card
             image={`https://picsum.photos/400?random=${playlist.id}`}
